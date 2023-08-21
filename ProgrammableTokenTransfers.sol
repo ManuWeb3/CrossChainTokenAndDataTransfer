@@ -335,7 +335,9 @@ contract ProgrammableTokenTransfers is CCIPReceiver, OwnerIsCreator {   // "Prog
         override        // defining its body now, hence overriding
         onlyWhitelistedSourceChain(any2EvmMessage.sourceChainSelector)       // Make sure source chain is whitelisted   // both checks in receive
         onlyWhitelistedSenders(abi.decode(any2EvmMessage.sender, (address))) // Make sure the sender is whitelisted     // both checks in receive
-    {
+        // both of the above 2 modifiers are added here only => "override" used
+        // as none of these is present in the original fn. signature in CCIPREceiver.sol abstract contract
+{
         lastReceivedMessageId = any2EvmMessage.messageId; // fetch the messageId
         lastReceivedText = abi.decode(any2EvmMessage.data, (string)); // abi-decoding of the sent text
         // Expect one token to be transferred at once, but you can transfer several tokens.
